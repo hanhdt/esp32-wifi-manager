@@ -7,7 +7,7 @@ body {
 a {
     color: darkblue;
     transition: color .2s ease-out;
-    text-decoration: none
+    text-decoration: none;
 }
 a:hover {
     color: red;
@@ -88,7 +88,7 @@ h1 {
     text-align: center;
     margin: 0;
     padding: 15px;
-    font-size: 1.4em
+    font-size: 1.4em;
 }
 h2 {
     margin: 0;
@@ -96,7 +96,7 @@ h2 {
     padding: 10px;
     text-transform: uppercase;
     color: #888;
-    font-size: 1.0em
+    font-size: 1.0em;
 }
 h3 {
     margin: 0;
@@ -231,10 +231,10 @@ h3 {
 }
 @-webkit-keyframes sk-bounce {
     0%, 100% {
-        -webkit-transform: scale(0.0)
+        -webkit-transform: scale(0.0);
     }
     50% {
-        -webkit-transform: scale(1.0)
+        -webkit-transform: scale(1.0);
     }
 }
 @keyframes sk-bounce {
