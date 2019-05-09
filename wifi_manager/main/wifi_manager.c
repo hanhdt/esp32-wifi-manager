@@ -706,9 +706,23 @@ void wifi_manager( void * pvParameters ){
 			xEventGroupClearBits(wifi_manager_event_group, WIFI_MANAGER_REQUEST_STA_CONNECT_BIT);
 		}
 		else if(uxBits & WIFI_MANAGER_REQUEST_WIFI_SCAN){
-                        ap_num = MAX_AP_NUM;
+			ap_num = MAX_AP_NUM;
 
-			ESP_ERROR_CHECK(esp_wifi_scan_start(&scan_config, true));
+			/**
+			 * @note:
+			 * The esp_wifi_scan_start() fails immediately,
+			 * if the Wi-Fi is in connecting process because the connecting has higher priority than the scan. 
+       *
+			 * When scan fails, the application simply complete connecting progress,
+			 * delay sometime and retry the scan.
+			 */
+			esp_err_t error = esp_wifi_scan_start(&scanConfig, pdTRUE);
+			if (error == ESP_FAIL) {
+				/* Disconnect wifi to complete connecting progress */
+				ESP_ERROR_CHECK(esp_wifi_disconnect());
+				vTaskDelay(pdMS_TO_TICKS(100));
+			}
+
 			ESP_ERROR_CHECK(esp_wifi_scan_get_ap_records(&ap_num, accessp_records));
 
 			/* make sure the http server isn't trying to access the list while it gets refreshed */
